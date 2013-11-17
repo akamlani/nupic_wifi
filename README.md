@@ -5,15 +5,15 @@
 * Inputs to Prediction: Signal Strength, Link Quality
 
 * Help Menu (python wifi.py -h)
-   --version                                show program's version number and exit
-  -h, --help                                show this help message and exit
-  -u, --uncached                            uncached scan
-  -d <DEVICE_NAME>, --device=<DEVICE_NAME>  wireless device,default=wlan0
-  -r <PERIOD>, --rescan=<PERIOD>            rescan period (sec), default=2
-  -e <STRENGTH>, --emulate=<STRENGTH>       fluctuation emulation RSSI, default=-5
-  -a <THRESHOLD>, --age=<THRESHOLD>         aging RSSI threshold, default=-70
-  -f <ESSID_NAME>, --filter=<ESSID_NAME>    filter ESSID string
-  -t <TIME_STEP>, --timestep=<TIME_STEP>    set unit time step, default=5
+  *   --version                                show program's version number and exit
+  *  -h, --help                                show this help message and exit
+  *  -u, --uncached                            uncached scan
+  *  -d <DEVICE_NAME>, --device=<DEVICE_NAME>  wireless device,default=wlan0
+  *  -r <PERIOD>, --rescan=<PERIOD>            rescan period (sec), default=2
+  *  -e <STRENGTH>, --emulate=<STRENGTH>       fluctuation emulation RSSI, default=-5
+  *  -a <THRESHOLD>, --age=<THRESHOLD>         aging RSSI threshold, default=-70
+  *  -f <ESSID_NAME>, --filter=<ESSID_NAME>    filter ESSID string
+  *  -t <TIME_STEP>, --timestep=<TIME_STEP>    set unit time step, default=5
 
   Example usage:
   python wifi.py -u -dwlan0 -r2 -a-80 -fDIRECT -t5
