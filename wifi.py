@@ -172,7 +172,7 @@ class Cells:
         self.entries = dict()
         self.zonemap = dict()
         self.step_unit = timestep
-        self.logger = Logger("./testfile.csv")
+        self.logger = Logger("./wlan.csv")
 
 
         # turn matplotlib interactive mode on (ion)
