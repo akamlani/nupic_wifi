@@ -14,7 +14,7 @@ class Logger:
 
     def write_headers(self):
         self.labels = ["timestamp", 'essid', "mac address", "link quality", "raw rssi", "raw zone", "predicted rssi", 
-        "predicted zone", "rssi delta", "rssi step delta", "timestamp step delta"]
+        "predicted zone", "rssi delta", "rssi step delta", "rssi step predicted", "timestamp step delta"]
         self.writer.writerow(self.labels)
 
     def log(self, input_vector):

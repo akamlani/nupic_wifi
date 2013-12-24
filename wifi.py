@@ -28,7 +28,7 @@ class Cells:
         self.zonemap = dict()
         self.step_unit = timestep
         self.logger = Logger("./wlan.csv")
-        self.graph  = GraphModels()
+        self.graph  = GraphModels(timestep)
 
     def __del__(self):
         self.entries.clear()
@@ -83,7 +83,7 @@ class Cells:
                 wifi_model.quality_raw, wifi_model.quality_max = int(quality_vector.split("/")[0]), int(quality_vector.split("/")[1])
                 rssi_raw = int(vector[2].rstrip(" dBm"))
                 wifi_model.rssi_raw = rssi_raw + int(rssi_fluctuate)
-                wifi_model.timestamp = int(round(time.time() * 1000))
+                wifi_model.timestamp = float(time.time()) 
                 #print("QUALITY/RSSI/MODEL %d,%d,%d,%d,%s:" % (wifi_model.quality_raw, wifi_model.quality_max, rssi_raw, wifi_model.rssi_raw, wifi_model))
 
         
@@ -129,16 +129,17 @@ class Cells:
                 if ( len(idx.history) > (self.step_unit*2) ):
                     pos = len(idx.history) - 1
                     obj = idx.history[pos - self.step_unit]
+                    idx.rssi_step_predicted = obj["rssi_predicted"]
                     idx.rssi_step_delta = idx.rssi_raw - obj["rssi_predicted"] 
                     idx.timestamp_step_delta = idx.timestamp - obj["timestamp"]
-                    print "Sample Delta Prediction: Len=%d,Pos=%d,Raw Rssi=%d,Predicted Rssi=%d,Rssi Step Delta=%d,Timestamp Delta=%d" % (
-                    len(idx.history), pos, idx.rssi_raw, idx.rssi_predicted, idx.rssi_step_delta, idx.timestamp_step_delta) 
+                    print "Sample Delta Prediction: Len=%d,Pos=%d,Raw Rssi=%d,Predicted Rssi=%d,Rssi Step Delta=%d,Rssi Step Prediction=%d, Timestamp Delta=%d" % (
+                    len(idx.history), pos, idx.rssi_raw, idx.rssi_predicted, idx.rssi_step_delta, idx.rssi_step_predicted,  idx.timestamp_step_delta) 
 
                 # if this particular model is aged, do not write to csv file
                 if not idx.aged:
                     input_vector = [idx.timestamp, idx.essid, idx.macaddress, str(idx.quality_raw)+"/"+str(idx.quality_max), idx.rssi_raw, 
                     idx.zone_raw.current_zone, idx.rssi_predicted, idx.zone_predicted.current_zone, idx.rssi_delta, idx.rssi_step_delta, 
-                    idx.timestamp_step_delta]             
+                    idx.rssi_step_predicted, idx.timestamp_step_delta]             
                     self.logger.log(input_vector)
                     idx.zone_raw.dump()
                     idx.zone_predicted.dump()
@@ -200,7 +201,6 @@ if __name__ == '__main__':
         cells.prediction(rssi_fluctuate, essid_filter)
         # Perform rescan in 'x' time period, and repeat until killed
         time.sleep(rescan_period)   
-        
         # output data to spreadsheet for mapping (MAC, ESSID, RAW RSSI, RSSI PREDICTED, RSSI DELTA)
         # access Point Predictions, number of times appear in each zone
     

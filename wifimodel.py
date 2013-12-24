@@ -15,6 +15,7 @@ class WifiModel:
         self.rssi_predicted = 0
         self.rssi_delta = 0
         self.rssi_step_delta = 0
+        self.rssi_step_predicted = 0
 
         self.timestamp = 0
         self.timestamp_step_delta = 0
